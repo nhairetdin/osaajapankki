@@ -15,4 +15,10 @@ export const signUpWithGoogle = () => {
     })
 }
 
+export const signUpWithEmailAndPassword = (email, pass) => {
+  firebase.auth().signInWithEmailAndPassword(email, pass).then(result => {
+    console.log(result)
+  })
+}
+
 export const signOut = () => { firebase.auth().signOut() }

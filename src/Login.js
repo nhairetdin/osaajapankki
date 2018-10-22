@@ -10,6 +10,10 @@ class Login extends Component {
     auth.signUpWithGoogle()
   }
 
+  loginAsAdmin = () => {
+    auth.signUpWithEmailAndPassword('admin@test.fi', 'admin1')
+  }
+
   render() {
     return (
       <ButtonToolbar vertical="true">
@@ -19,6 +23,7 @@ class Login extends Component {
         <Button color="green" onClick={ this.loginGoogle }>
           <Icon icon="google"  /> Login with Google
         </Button>
+        <Button color="red" onClick={ this.loginAsAdmin }>Login as admin</Button>
       </ButtonToolbar>
     )
   }

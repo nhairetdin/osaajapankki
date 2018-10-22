@@ -9,7 +9,7 @@ import Login from './Login'
 import AddUser from './AddUser'
 import Search from './Search'
 import NavbarTop from './NavbarTop'
-import { Loader, Container, Header, Content } from 'rsuite'
+import { Button, Loader, Container, Header, Content } from 'rsuite'
 import { setStatePersonalData, toggleLoading, setStateLogoutUser } from './redux/reducer'
 
 class App extends Component {
@@ -44,7 +44,12 @@ class App extends Component {
       // render login screen
       content = (<Login />)
     } else if(this.props.user === undefined) {
-      content = (<h2>Ei oikeuksia.</h2>)
+      content = (
+        <div>
+          <h2>Ei oikeuksia.</h2>
+          <Button color="green" onClick={ auth.signOut }>Logout</Button>
+        </div>
+      )
     } else {
       // render UI
       content = (
