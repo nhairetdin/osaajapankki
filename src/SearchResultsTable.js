@@ -5,10 +5,32 @@ import './SearchResultsTable.css'
 const { Column, HeaderCell, Cell, Pagination } = Table;
 
 class SearchResultsTable extends Component {
+  state = {
+    displayLength: 10,
+    loading: false,
+    page: 1
+  }
+
+  handleChangePage = (dataKey) => {
+    this.setState({
+      page: dataKey
+    })
+  }
+
+  handleChangeLength = (dataKey) => {
+    this.setState({
+      page: 1,
+      displayLength: dataKey
+    })
+  }
+
   render() {
+    const start = this.state.displayLength * (this.state.page - 1)
+    const end = start + this.state.displayLength
+
     return (
       <div>
-        <Table autoHeight data={ this.props.artists }>
+        <Table autoHeight data={ this.props.artists.slice(start, end) }>
           <Column width={200} resizable>
             <HeaderCell className="headerCell">Nimi</HeaderCell>
             <Cell dataKey="name" className="nameCell" />
@@ -29,6 +51,24 @@ class SearchResultsTable extends Component {
             <Cell dataKey="email" />
           </Column>
         </Table>
+
+        <Pagination
+          lengthMenu={[
+            {
+              value: 10,
+              label: 10
+            },
+            {
+              value: 20,
+              label: 20
+            }
+          ]}
+          activePage={this.state.page}
+          displayLength={this.state.displayLength}
+          total={this.props.artists.length}
+          onChangePage={this.handleChangePage}
+          onChangeLength={this.handleChangeLength}
+        />
       </div>
     )
   }
