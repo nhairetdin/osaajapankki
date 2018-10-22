@@ -14,10 +14,6 @@ import { setStatePersonalData, toggleLoading, setStateLogoutUser } from './redux
 
 class App extends Component {
   async componentDidMount() {
-    // if (firebase.auth().currentUser.email) {
-    //   console.log("user already in")
-    //   this.props.toggleLoading()
-    // }
     firebase.auth().onAuthStateChanged(async authUser => {
       console.log("auth state changed")
       if (authUser) {
@@ -25,9 +21,6 @@ class App extends Component {
         let personalData = await getPersonalData()
         this.props.setStatePersonalData(personalData)
         console.log(personalData)
-        // if (personalData) {
-        //   this.props.userLoggedIn()
-        // }
       } else {
         this.props.setStateLogoutUser()
       }
@@ -60,6 +53,7 @@ class App extends Component {
             </Header>
 
             <Content>
+              <Route exact path="/" render={() => <Search />} />
               <Route exact path="/haku" render={() => <Search />} />
               <Route exact path="/lisaa" render={() => <AddUser />} />
             </Content>

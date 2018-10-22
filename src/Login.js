@@ -18,10 +18,10 @@ class Login extends Component {
     return (
       <ButtonToolbar vertical="true">
         <Button color="blue" >
-          <Icon icon="facebook-official"  /> Login with Facebook
+          Login with Facebook
         </Button>
         <Button color="green" onClick={ this.loginGoogle }>
-          <Icon icon="google"  /> Login with Google
+          Login with Google
         </Button>
         <Button color="red" onClick={ this.loginAsAdmin }>Login as admin</Button>
       </ButtonToolbar>
