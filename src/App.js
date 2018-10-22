@@ -35,14 +35,15 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.props.user)
     let content = null
     if (this.props.loading) {
       // render loading animation
       content = (<Loader size="lg" content="Hetki..." />)
-    } else if (!this.props.user) {
+    } else if (this.props.user === false) {
       // render login screen
       content = (<Login />)
-    } else if(this.props.user.flag_authorized !== true) {
+    } else if(this.props.user === undefined) {
       content = (<h2>Ei oikeuksia.</h2>)
     } else {
       // render UI

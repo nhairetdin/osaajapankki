@@ -1,7 +1,10 @@
 const initialState = {
   user: false,
   loading: true,
-  activeTab: "1"
+  activeTab: "1",
+  allArtists: [],
+  filteredArtists: [],
+  filters: {}
 }
 
 const reducer = (state = initialState, action) => {
@@ -19,7 +22,13 @@ const reducer = (state = initialState, action) => {
       return { ...state, activeTab: action.data }
     }
     case 'SET_ALL_ARTISTS': {
-      return { ...state, allArtists: action.data }
+      return { ...state, allArtists: action.data, filteredArtists: action.data }
+    }
+    // case 'SET_FILTER': {
+    //   return { ...state, filters: { ...state.filters, ...action.data }}
+    // }
+    case 'SET_FILTERS': {
+      return { ...state, filteredArtists: applyFilters(state.allArtists, action.data) }
     }
     default:
       return state
@@ -57,6 +66,33 @@ export const setStateAllArtists = (artists) => {
     type: 'SET_ALL_ARTISTS',
     data: artists
   }
+}
+
+// export const setFilter = (filter) => {
+//   return {
+//     type: 'SET_FILTER',
+//     data: filter
+//   }
+// }
+
+export const setStateFilters = (filters) => {
+  return {
+    type: 'SET_FILTERS',
+    data: filters
+  }
+}
+
+const applyFilters = (allArtists, filters) => {
+  let filteredArtists = allArtists.filter(artist => {
+    let found = true
+    Object.keys(filters).forEach(key => {
+      if (!artist[key].toLowerCase().includes(filters[key].toLowerCase())) {
+        found = false
+      }
+    })
+    return found
+  })
+  return filteredArtists
 }
 
 export default reducer
