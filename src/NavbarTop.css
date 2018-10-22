@@ -36,3 +36,7 @@
 .worksans {
   font-family: 'Work Sans', sans-serif;
 }
+
+.disableHoverEffect:hover {
+  background: red;
+}

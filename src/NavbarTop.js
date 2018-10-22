@@ -39,6 +39,9 @@ class NavbarTop extends Component {
           </Nav>
 
           <Nav pullRight>
+            <Nav.Item active="false">
+              { this.props.user.email }
+            </Nav.Item>
             <Button
               className="buttonLogout"
               appearance="primary"
