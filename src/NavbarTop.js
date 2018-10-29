@@ -23,7 +23,7 @@ class NavbarTop extends Component {
           <Nav onSelect={ this.onSelect } activeKey={ this.props.activeTab }>
             <Nav.Item 
               eventKey="1" 
-              //icon={<Icon icon="search-peoples" />} 
+              icon={<Icon icon="search-peoples" />} 
               componentClass={Link}
               to={'/haku'}>
               HAKU
@@ -31,7 +31,7 @@ class NavbarTop extends Component {
 
             <Nav.Item 
               eventKey="2" 
-              //icon={<Icon icon="plus-circle" />} 
+              icon={<Icon icon="plus-circle" />} 
               componentClass={Link}
               to={'/lisaa'}>
               LISÄÄ KÄYTTÄJÄ
