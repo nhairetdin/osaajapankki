@@ -30,7 +30,11 @@ class SearchResultsTable extends Component {
 
     return (
       <div>
-        <Table autoHeight data={ this.props.artists.slice(start, end) }>
+        <Table
+          autoHeight
+          data={this.props.artists.slice(start, end)}
+          onRowClick={(rowData) => console.log(rowData)}
+        >
           <Column width={200} resizable>
             <HeaderCell className="headerCell">Nimi</HeaderCell>
             <Cell dataKey="name" className="nameCell" />
@@ -44,6 +48,16 @@ class SearchResultsTable extends Component {
           <Column width={150} resizable>
             <HeaderCell className="headerCell">Osaamisalue</HeaderCell>
             <Cell dataKey="skill" />
+          </Column>
+
+          <Column width={200} resizable>
+            <HeaderCell className="headerCell">Katuosoite</HeaderCell>
+            <Cell dataKey="address" />
+          </Column>
+
+          <Column width={150} resizable>
+            <HeaderCell className="headerCell">Puhelin</HeaderCell>
+            <Cell dataKey="phone" />
           </Column>
 
           <Column flexGrow={1} align="right">

@@ -1,5 +1,5 @@
 .imageWrapper {
   height: 256px;
   width: 256px;
-  background-color: tan;
+  border: 1px solid #00c6fc;
 }

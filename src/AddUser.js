@@ -28,6 +28,8 @@ class AddUser extends Component {
       email: "",
       name: "",
       city: "",
+      address: "",
+      phone: "",
       skill: "",
       profileImageUrl: ""
     }
@@ -77,6 +79,18 @@ class AddUser extends Component {
               <FormGroup>
                 <ControlLabel>Kaupunki:</ControlLabel>
                 <FormControl name="city" />
+                <HelpBlock>Pakollinen tieto</HelpBlock>
+              </FormGroup>
+
+              <FormGroup>
+                <ControlLabel>Katuosoite:</ControlLabel>
+                <FormControl name="address" />
+                <HelpBlock>Pakollinen tieto</HelpBlock>
+              </FormGroup>
+
+              <FormGroup>
+                <ControlLabel>Puhelinnumero:</ControlLabel>
+                <FormControl name="phone" />
                 <HelpBlock>Pakollinen tieto</HelpBlock>
               </FormGroup>
 
