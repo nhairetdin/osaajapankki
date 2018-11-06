@@ -4,7 +4,8 @@ const initialState = {
   activeTab: "1",
   allArtists: [],
   filteredArtists: [],
-  filters: {}
+  filters: {},
+  displayUserModal: false
 }
 
 const reducer = (state = initialState, action) => {
@@ -29,6 +30,10 @@ const reducer = (state = initialState, action) => {
     // }
     case 'SET_FILTERS': {
       return { ...state, filteredArtists: applyFilters(state.allArtists, action.data) }
+    }
+    case 'TOGGLE_DISPLAY_USERMODAL': {
+      return state.displayUserModal ? { ...state, displayUserModal: false} : { ...state, displayUserModal: action.data }
+      //return { ...state, displayUserModal: !state.displayUserModal }
     }
     default:
       return state
@@ -79,6 +84,13 @@ export const setStateFilters = (filters) => {
   return {
     type: 'SET_FILTERS',
     data: filters
+  }
+}
+
+export const toggleDisplayUserModal = (rowData) => {
+  return {
+    type: 'TOGGLE_DISPLAY_USERMODAL',
+    data: rowData
   }
 }
 

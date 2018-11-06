@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { toggleDisplayUserModal } from './redux/reducer'
+import DisplayUserModal from './DisplayUserModal'
 import { Table } from 'rsuite';
 import './SearchResultsTable.css'
 const { Column, HeaderCell, Cell, Pagination } = Table;
@@ -30,10 +32,11 @@ class SearchResultsTable extends Component {
 
     return (
       <div>
+        <DisplayUserModal />
         <Table
           autoHeight
           data={this.props.artists.slice(start, end)}
-          onRowClick={(rowData) => console.log(rowData)}
+          onRowClick={ (rowData) => this.props.toggleDisplayUserModal(rowData) }
         >
           <Column width={200} resizable>
             <HeaderCell className="headerCell">Nimi</HeaderCell>
@@ -95,5 +98,6 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  { toggleDisplayUserModal }
 )(SearchResultsTable)
