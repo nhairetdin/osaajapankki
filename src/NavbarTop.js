@@ -34,7 +34,7 @@ class NavbarTop extends Component {
               icon={<Icon icon="plus-circle" />} 
               componentClass={Link}
               to={'/lisaa'}>
-              LISÄÄ TAITEILIJAOHJAAJA
+              LISÄÄ HENKILÖ
             </Nav.Item>
           </Nav>
 
