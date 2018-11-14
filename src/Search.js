@@ -18,7 +18,7 @@ class Search extends Component {
     return (
       <FlexboxGrid justify="center">
         <FlexboxGrid.Item colspan={22}>
-          <Divider>Hae taiteilijaohjaajia</Divider>
+          <Divider></Divider>
         </FlexboxGrid.Item>
 
         <FlexboxGrid.Item colspan={4} className="filterContainer">
