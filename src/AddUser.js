@@ -59,7 +59,7 @@ class AddUser extends Component {
       <div>
         <FlexboxGrid justify="center">
           <FlexboxGrid.Item colspan={18}>
-            <Divider>Uusi käyttäjä</Divider>
+            <Divider></Divider>
           </FlexboxGrid.Item>
 
           <FlexboxGrid.Item colspan={9}>
