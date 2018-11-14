@@ -13,6 +13,21 @@ class DisplayUserModal extends Component {
     this.props.toggleDisplayUserModal()
   }
 
+  getUrlPrefix = (url) => {
+    let prefix
+
+    if (!url) {
+      return ""
+    }
+
+    if (url.startsWith("http")) {
+      prefix = ""
+    } else {
+      prefix = "//"
+    }
+    return prefix
+  }
+
   render() {
     console.log(this.props.displayModal)
     return (
@@ -38,6 +53,9 @@ class DisplayUserModal extends Component {
               <p><span style={{ fontWeight: 'bold' }}>Email:</span> { this.props.displayModal.email } </p>
               <p><span style={{ fontWeight: 'bold' }}>Puhelin:</span> { this.props.displayModal.phone } </p>
               <p><span style={{ fontWeight: 'bold' }}>Osaamisalue:</span> { this.props.displayModal.skill } </p>
+              <p><span style={{ fontWeight: 'bold' }}>Yhteyshenkilö:</span> { this.props.displayModal.contactperson } </p>
+              <p><span style={{ fontWeight: 'bold' }}>Verkkosivu:</span> <a target="_blank" href={ this.getUrlPrefix(this.props.displayModal.website) + this.props.displayModal.website }>{ this.props.displayModal.website }</a></p>
+              <p><span style={{ fontWeight: 'bold' }}>Erityishuomioita:</span> { this.props.displayModal.notes } </p>
               <p><span style={{ fontWeight: 'bold' }}>Mukana projekteissa:</span> </p>
             </FlexboxGrid.Item>
           </FlexboxGrid>

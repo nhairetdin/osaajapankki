@@ -31,7 +31,10 @@ class AddUser extends Component {
       address: "",
       phone: "",
       skill: "",
-      profileImageUrl: ""
+      profileImageUrl: "",
+      contactperson: "",
+      website: "",
+      notes: ""
     }
   }
 
@@ -98,6 +101,22 @@ class AddUser extends Component {
                 <ControlLabel>Osaamisalue:</ControlLabel>
                 <FormControl name="skill" />
                 <HelpBlock>Pakollinen tieto</HelpBlock>
+              </FormGroup>
+
+              <FormGroup>
+                <ControlLabel>Yhteyshenkilö:</ControlLabel>
+                <FormControl name="contactperson" />
+                <HelpBlock>Pakollinen tieto</HelpBlock>
+              </FormGroup>
+
+              <FormGroup>
+                <ControlLabel>Verkkosivu:</ControlLabel>
+                <FormControl name="website" />
+              </FormGroup>
+
+              <FormGroup>
+                <ControlLabel>Erityishuomioita:</ControlLabel>
+                <FormControl name="notes" />
               </FormGroup>
 
               <FormGroup>
