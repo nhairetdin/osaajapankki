@@ -5,3 +5,7 @@
 .headerCell {
   color: #00c6fc;
 }
+
+.rs-table-cell-content {
+  padding: 10px 10px;
+}

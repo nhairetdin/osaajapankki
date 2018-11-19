@@ -37,6 +37,7 @@ class SearchResultsTable extends Component {
           autoHeight
           data={this.props.artists.slice(start, end)}
           onRowClick={ (rowData) => this.props.toggleDisplayUserModal(rowData) }
+          rowHeight={38}
         >
           <Column width={200} resizable>
             <HeaderCell className="headerCell">Nimi</HeaderCell>
