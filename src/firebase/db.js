@@ -45,3 +45,20 @@ export const addNewUserToDatabase = async (user) => {
     return false
   }
 }
+
+export const removeUserFromDatabase = async (useremail) => {
+  try {
+    const userRef = db.collection('users').doc(useremail)
+    const documentSnapshot = await userRef.get()
+    if (documentSnapshot.exists) {
+      await userRef.delete()
+      return useremail
+    } else {
+      console.log("user not found")
+      return false// user not found
+    }
+  } catch (error) {
+    console.log(error)
+    return false
+  }
+}

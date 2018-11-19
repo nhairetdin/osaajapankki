@@ -25,15 +25,19 @@ const reducer = (state = initialState, action) => {
     case 'SET_ALL_ARTISTS': {
       return { ...state, allArtists: action.data, filteredArtists: action.data }
     }
-    // case 'SET_FILTER': {
-    //   return { ...state, filters: { ...state.filters, ...action.data }}
-    // }
     case 'SET_FILTERS': {
       return { ...state, filteredArtists: applyFilters(state.allArtists, action.data) }
     }
     case 'TOGGLE_DISPLAY_USERMODAL': {
-      return state.displayUserModal ? { ...state, displayUserModal: false} : { ...state, displayUserModal: action.data }
+      return state.displayUserModal ? { ...state, displayUserModal: false } : { ...state, displayUserModal: action.data }
       //return { ...state, displayUserModal: !state.displayUserModal }
+    }
+    case 'DELETE_USER': {
+      return {
+        ...state,
+        allArtists: state.allArtists.filter(artist => artist.email !== action.data),
+        filteredArtists: state.filteredArtists.filter(artist => artist.email !== action.data)
+      }
     }
     default:
       return state
@@ -73,13 +77,6 @@ export const setStateAllArtists = (artists) => {
   }
 }
 
-// export const setFilter = (filter) => {
-//   return {
-//     type: 'SET_FILTER',
-//     data: filter
-//   }
-// }
-
 export const setStateFilters = (filters) => {
   return {
     type: 'SET_FILTERS',
@@ -91,6 +88,13 @@ export const toggleDisplayUserModal = (rowData) => {
   return {
     type: 'TOGGLE_DISPLAY_USERMODAL',
     data: rowData
+  }
+}
+
+export const deleteUser = (useremail) => {
+  return {
+    type: 'DELETE_USER',
+    data: useremail
   }
 }
 

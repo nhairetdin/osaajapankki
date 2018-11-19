@@ -1,16 +1,34 @@
 import React, { Component } from 'react'
-import { Modal, Button, Loader, FlexboxGrid } from 'rsuite'
+import { Modal, Button, Loader, FlexboxGrid, Toggle, Icon } from 'rsuite'
 import { connect } from 'react-redux'
-import { toggleDisplayUserModal } from './redux/reducer'
+import { toggleDisplayUserModal, deleteUser } from './redux/reducer'
+import { removeUserFromDatabase } from './firebase/db'
+import './DisplayUserModal.css'
 
 class DisplayUserModal extends Component {
   state = {
-    imageLoaded: false
+    imageLoaded: false,
+    toggleDeleteButton: true
   }
 
   close = () => {
-    this.setState({ imageLoaded: false })
+    this.setState({ imageLoaded: false, toggleDeleteButton: true })
     this.props.toggleDisplayUserModal()
+  }
+
+  switchToggleState = () => {
+    console.log("toggleState called")
+    this.setState({ toggleDeleteButton: !this.state.toggleDeleteButton })
+  }
+
+  removeUser = async () => {
+    const deleted = await removeUserFromDatabase(this.props.displayModal.email)
+    if (deleted) {
+      this.props.deleteUser(deleted)
+      this.close()
+    } else {
+      console.log("delete failed")
+    }
   }
 
   getUrlPrefix = (url) => {
@@ -62,11 +80,18 @@ class DisplayUserModal extends Component {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button onClick={ this.close } appearance="primary">
-            Ok
+          <Toggle onChange={ this.switchToggleState } />
+
+          <Button onClick={ this.removeUser } appearance="primary" color="red" disabled={ this.state.toggleDeleteButton }>
+            <Icon icon="trash" /> Poista henkilö
           </Button>
-          <Button onClick={ this.close } appearance="subtle">
-            Cancel
+
+          <Button onClick={ this.close } appearance="primary" color="orange">
+            <Icon icon="edit" /> Muokkaa tietoja
+          </Button>
+
+          <Button onClick={ this.close } appearance="primary">
+            <Icon icon="close" /> Sulje
           </Button>
         </Modal.Footer>
       </Modal>
@@ -82,5 +107,5 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps,
-  { toggleDisplayUserModal }
+  { toggleDisplayUserModal, deleteUser }
 )(DisplayUserModal)
