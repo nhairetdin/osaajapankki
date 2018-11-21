@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Modal, Button, Loader, FlexboxGrid, Toggle, Icon } from 'rsuite'
+import { Modal, Button, Loader, FlexboxGrid, Toggle, Icon, Notification } from 'rsuite'
 import { connect } from 'react-redux'
 import { toggleDisplayUserModal, deleteUser } from './redux/reducer'
 import { removeUserFromDatabase } from './firebase/db'
@@ -25,6 +25,10 @@ class DisplayUserModal extends Component {
     const deleted = await removeUserFromDatabase(this.props.displayModal.email)
     if (deleted) {
       this.props.deleteUser(deleted)
+      Notification['success']({
+        title: 'Henkilö poistettu tietokannasta:',
+        description: this.props.displayModal.name
+      })
       this.close()
     } else {
       console.log("delete failed")
@@ -82,15 +86,15 @@ class DisplayUserModal extends Component {
         <Modal.Footer>
           <Toggle onChange={ this.switchToggleState } />
 
-          <Button onClick={ this.removeUser } appearance="primary" color="red" disabled={ this.state.toggleDeleteButton }>
+          <Button size="sm" onClick={ this.removeUser } appearance="primary" color="red" disabled={ this.state.toggleDeleteButton }>
             <Icon icon="trash" /> Poista henkilö
           </Button>
 
-          <Button onClick={ this.close } appearance="primary" color="orange">
+          <Button size="sm" onClick={ this.close } appearance="primary" color="orange">
             <Icon icon="edit" /> Muokkaa tietoja
           </Button>
 
-          <Button onClick={ this.close } appearance="primary">
+          <Button size="sm" onClick={ this.close } appearance="primary">
             <Icon icon="close" /> Sulje
           </Button>
         </Modal.Footer>
