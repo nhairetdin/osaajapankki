@@ -22,20 +22,23 @@ import {
   Notification,
   Divider } from 'rsuite'
 
+const initialState = {
+  email: "",
+  name: "",
+  city: "",
+  address: "",
+  phone: "",
+  skill: "",
+  profileImageUrl: "https://firebasestorage.googleapis.com/v0/b/osaajapankki2.appspot.com/o/profileimages%2Favatar.png?alt=media&token=64361396-5e90-428d-a6a4-d72c1d413ea1",
+  contactperson: "",
+  website: "",
+  notes: ""
+}
+
 class AddUser extends Component {
   state = {
-    form: {
-      email: "",
-      name: "",
-      city: "",
-      address: "",
-      phone: "",
-      skill: "",
-      profileImageUrl: "",
-      contactperson: "",
-      website: "",
-      notes: ""
-    }
+    form: { ...initialState },
+    formNotValid: true
   }
 
   componentWillMount = () => {
@@ -44,8 +47,13 @@ class AddUser extends Component {
   }
 
   onProfileFormChange = (formObj) => {
-    console.log(this.state.form)
-    this.setState({ form: { ...this.state.form, ...formObj} })
+    this.setState({ form: { ...this.state.form, ...formObj} }, () => {
+      if (this.requiredFieldsFilled()) {
+        this.setState({ formNotValid: false })
+      } else {
+        this.setState({ formNotValid: true })
+      }
+    })
   }
 
   onReturnProfileImageUrl = (url) => {
@@ -54,7 +62,30 @@ class AddUser extends Component {
   }
 
   onSubmit = async () => {
-    await addNewUserToDatabase(this.state.form)
+    const userSuccessfullyAdded = await addNewUserToDatabase(this.state.form)
+    if (userSuccessfullyAdded) {
+      Notification['success']({
+        title: 'Lisättiin käyttäjä',
+        description: this.state.form.name
+      })
+      this.setState({ form: { ...initialState } })
+    } else {
+      Notification['error']({
+        title: 'Virhe lisättäessä käyttäjää',
+        description: 'Yritä myöhemmin uudelleen, tai ota yhteyttä ylläpitoon'
+      })
+    }
+  }
+
+  requiredFieldsFilled = () => {
+    const required = ['email', 'name', 'city', 'address', 'phone', 'skill', 'contactperson']
+    let isValid = true
+    for (let i in required) {
+      if (this.state.form[required[i]] === "") {
+        isValid = false
+      }
+    }
+    return isValid
   }
 
   render() {
@@ -66,47 +97,44 @@ class AddUser extends Component {
           </FlexboxGrid.Item>
 
           <FlexboxGrid.Item colspan={9}>
-            <Form fluid onChange={(obj) => this.onProfileFormChange(obj) }>
+            <Form 
+              fluid 
+              onChange={ (obj) => this.onProfileFormChange(obj) }
+              formValue={ this.state.form }
+            >
               <FormGroup>
-                <ControlLabel>Sähköposti:</ControlLabel>
+                <ControlLabel>Sähköposti:<span className="inputRequired">*</span></ControlLabel>
                 <FormControl name="email" />
-                <HelpBlock>Pakollinen tieto</HelpBlock>
               </FormGroup>
 
               <FormGroup>
-                <ControlLabel>Nimi:</ControlLabel>
+                <ControlLabel>Nimi:<span className="inputRequired">*</span></ControlLabel>
                 <FormControl name="name" />
-                <HelpBlock>Pakollinen tieto</HelpBlock>
               </FormGroup>
 
               <FormGroup>
-                <ControlLabel>Kaupunki:</ControlLabel>
+                <ControlLabel>Kaupunki:<span className="inputRequired">*</span></ControlLabel>
                 <FormControl name="city" />
-                <HelpBlock>Pakollinen tieto</HelpBlock>
               </FormGroup>
 
               <FormGroup>
-                <ControlLabel>Katuosoite:</ControlLabel>
+                <ControlLabel>Katuosoite:<span className="inputRequired">*</span></ControlLabel>
                 <FormControl name="address" />
-                <HelpBlock>Pakollinen tieto</HelpBlock>
               </FormGroup>
 
               <FormGroup>
-                <ControlLabel>Puhelinnumero:</ControlLabel>
+                <ControlLabel>Puhelinnumero:<span className="inputRequired">*</span></ControlLabel>
                 <FormControl name="phone" />
-                <HelpBlock>Pakollinen tieto</HelpBlock>
               </FormGroup>
 
               <FormGroup>
-                <ControlLabel>Osaamisalue:</ControlLabel>
+                <ControlLabel>Osaamisalue:<span className="inputRequired">*</span></ControlLabel>
                 <FormControl name="skill" />
-                <HelpBlock>Pakollinen tieto</HelpBlock>
               </FormGroup>
 
               <FormGroup>
-                <ControlLabel>Yhteyshenkilö:</ControlLabel>
+                <ControlLabel>Yhteyshenkilö:<span className="inputRequired">*</span></ControlLabel>
                 <FormControl name="contactperson" />
-                <HelpBlock>Pakollinen tieto</HelpBlock>
               </FormGroup>
 
               <FormGroup>
@@ -121,7 +149,7 @@ class AddUser extends Component {
 
               <FormGroup>
                 <ButtonToolbar>
-                  <Button appearance="primary" onClick={ this.onSubmit }>Tallenna</Button>
+                  <Button appearance="primary" onClick={ this.onSubmit } disabled={ this.state.formNotValid }>Tallenna</Button>
                 </ButtonToolbar>
               </FormGroup>
             </Form>

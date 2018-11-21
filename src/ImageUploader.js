@@ -12,7 +12,7 @@ class ImageUploader extends Component {
       avatar: "",
       isUploading: false,
       progress: 0,
-      avatarURL: ""
+      avatarURL: "https://firebasestorage.googleapis.com/v0/b/osaajapankki2.appspot.com/o/profileimages%2Favatar.png?alt=media&token=64361396-5e90-428d-a6a4-d72c1d413ea1"
     }
   }
 
