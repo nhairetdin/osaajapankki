@@ -36,7 +36,7 @@ class App extends Component {
     } else if (this.props.user === false) {
       // render login screen
       content = (<Login />)
-    } else if(this.props.user === undefined) {
+    } else if (this.props.user === undefined) {
       content = (
         <div>
           <h2>Ei oikeuksia.</h2>
