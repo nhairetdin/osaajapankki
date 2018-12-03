@@ -85,7 +85,6 @@ class DisplayUserModal extends Component {
                 <li><CustomComponent data={ this.props.displayModal } accessor="phone" displ="Puhelin: " onSaveChange={ this.onSaveChange } /></li>
                 <li><CustomComponent data={ this.props.displayModal } accessor="skill" displ="Osaamisalue: " onSaveChange={ this.onSaveChange } /></li>
                 <li><CustomComponent data={ this.props.displayModal } accessor="contactperson" displ="Yhteyshenkilö: " onSaveChange={ this.onSaveChange } /></li>
-                <li><CustomComponent data={ this.props.displayModal } accessor="address" displ="Osoite: " onSaveChange={ this.onSaveChange } /></li>
                 <li><CustomComponent data={ this.props.displayModal } accessor="website" displ="Verkkosivu: " onSaveChange={ this.onSaveChange } /></li>
                 <li><CustomComponent data={ this.props.displayModal } accessor="notes" displ="Erityishuomioita: " onSaveChange={ this.onSaveChange } /></li>
                 <li><CustomComponent data={ this.props.displayModal } accessor="projects" displ="Projektit: " onSaveChange={ this.onSaveChange } textarea={ true }/></li>
