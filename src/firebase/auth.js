@@ -21,4 +21,14 @@ export const signUpWithEmailAndPassword = (email, pass) => {
   })
 }
 
+export const createUserWithEmailAndPassword = (email, pass) => {
+  firebase.auth().createUserWithEmailAndPassword(email,pass)
+    .then(() => {
+      console.log("user created")
+    })
+    .catch((err) => {
+      console.log("user creation failed")
+    })
+}
+
 export const signOut = () => { firebase.auth().signOut() }
