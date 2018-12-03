@@ -9,6 +9,7 @@ import Login from './Login'
 import AddUser from './AddUser'
 import Search from './Search'
 import NavbarTop from './NavbarTop'
+import ArtistSelf from './ArtistSelf'
 import { Button, Loader, Container, Header, Content } from 'rsuite'
 import { setStatePersonalData, toggleLoading, setStateLogoutUser } from './redux/reducer'
 
@@ -17,9 +18,13 @@ class App extends Component {
     firebase.auth().onAuthStateChanged(async authUser => {
       console.log("auth state changed")
       if (authUser) {
-        console.log("user is logged in")
+        console.log("user is logged in", authUser)
         let personalData = await getPersonalData()
-        this.props.setStatePersonalData(personalData)
+        if (personalData !== undefined) {
+          this.props.setStatePersonalData(personalData)
+        } else {
+          this.props.setStatePersonalData({ email: authUser.email })
+        }
         console.log(personalData)
       } else {
         this.props.setStateLogoutUser()
@@ -33,18 +38,27 @@ class App extends Component {
     if (this.props.loading) {
       // render loading animation
       content = (<Loader size="lg" content="Hetki..." />)
+      // user is not signed in:
     } else if (this.props.user === false) {
       // render login screen
       content = (<Login />)
-    } else if (this.props.user === undefined) {
+      // user is signed in, but not LNS crew (admin)
+    } else if (!this.props.user.flag_admin) {
       content = (
-        <div>
-          <h2>Ei oikeuksia.</h2>
-          <Button color="green" onClick={ auth.signOut }>Logout</Button>
-        </div>
+        <Router>
+          <Container>
+            <Header>
+              <NavbarTop />
+            </Header>
+
+            <Content>
+              <ArtistSelf />
+            </Content>
+          </Container>
+        </Router>
       )
     } else {
-      // render UI
+      // user is admin
       content = (
         <Router>
           <Container>

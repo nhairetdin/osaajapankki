@@ -20,6 +20,7 @@ class NavbarTop extends Component {
         </Navbar.Header>
 
         <Navbar.Body>
+          { this.props.user.flag_admin === true ? (
           <Nav onSelect={ this.onSelect } activeKey={ this.props.activeTab }>
             <Nav.Item 
               eventKey="1" 
@@ -37,6 +38,7 @@ class NavbarTop extends Component {
               LISÄÄ HENKILÖ
             </Nav.Item>
           </Nav>
+          ): null}
 
           <Nav pullRight>
             <Nav.Item active="false">

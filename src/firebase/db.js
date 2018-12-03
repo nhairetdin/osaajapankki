@@ -30,10 +30,20 @@ export const getArtists = async () => {
   }
 }
 
+export const updateProjectsField = async (email, projects) => {
+  try {
+    await db.collection('users').doc(email).update({ projects: projects })
+    return true
+  } catch(error) {
+    return false
+  }
+}
+
 /////////////////////////////// ADMIN ////////////////////////////////
 export const addNewUserToDatabase = async (user) => {
   const newUser = { 
-    ...user, 
+    ...user,
+    email: user.email.toLowerCase(),
     flag_authorized: true, 
     flag_artist: true
   }

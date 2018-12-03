@@ -78,7 +78,7 @@ class DisplayUserModal extends Component {
               <p><span style={{ fontWeight: 'bold' }}>Yhteyshenkilö:</span> { this.props.displayModal.contactperson } </p>
               <p><span style={{ fontWeight: 'bold' }}>Verkkosivu:</span> <a target="_blank" href={ this.getUrlPrefix(this.props.displayModal.website) + this.props.displayModal.website }>{ this.props.displayModal.website }</a></p>
               <p><span style={{ fontWeight: 'bold' }}>Erityishuomioita:</span> { this.props.displayModal.notes } </p>
-              <p><span style={{ fontWeight: 'bold' }}>Mukana projekteissa:</span> </p>
+              <p><span style={{ fontWeight: 'bold' }}>Mukana projekteissa:</span> { this.props.displayModal.projects } </p>
             </FlexboxGrid.Item>
           </FlexboxGrid>
         </Modal.Body>

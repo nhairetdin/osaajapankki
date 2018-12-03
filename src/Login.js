@@ -68,7 +68,7 @@ class Login extends Component {
           </Navbar>
         </Header>
 
-        <Content>
+        <Content className="loginbox">
           <FlexboxGrid justify="center" align="middle">
             <FlexboxGrid.Item colspan={10}>
               <Panel header={<h3>Kirjaudu sisään</h3>} bordered>

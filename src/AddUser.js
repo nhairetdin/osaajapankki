@@ -32,7 +32,8 @@ const initialState = {
   profileImageUrl: "https://firebasestorage.googleapis.com/v0/b/osaajapankki2.appspot.com/o/profileimages%2Favatar.png?alt=media&token=64361396-5e90-428d-a6a4-d72c1d413ea1",
   contactperson: "",
   website: "",
-  notes: ""
+  notes: "",
+  projects: ""
 }
 
 class AddUser extends Component {
@@ -145,6 +146,11 @@ class AddUser extends Component {
               <FormGroup>
                 <ControlLabel>Erityishuomioita:</ControlLabel>
                 <FormControl name="notes" />
+              </FormGroup>
+
+              <FormGroup>
+                <ControlLabel>Projektit:</ControlLabel>
+                <FormControl name="projects" componentClass="textarea" rows={4} />
               </FormGroup>
 
               <FormGroup>
