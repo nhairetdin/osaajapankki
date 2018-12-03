@@ -39,6 +39,29 @@ const reducer = (state = initialState, action) => {
         filteredArtists: state.filteredArtists.filter(artist => artist.email !== action.data)
       }
     }
+    case 'UPDATE_CHANGED_USERDATA': {
+      console.log(state.allArtists)
+      return { 
+        ...state, 
+        displayUserModal: { 
+          ...state.displayUserModal, 
+          ...action.data },
+        allArtists: state.allArtists.map(artist => {
+          if (artist.email === action.email) {
+            return { ...artist, ...action.data }
+          } else {
+            return artist
+          }
+        }),
+        filteredArtists: state.filteredArtists.map(artist => {
+          if (artist.email === action.email) {
+            return { ...artist, ...action.data }
+          } else {
+            return artist
+          }
+        })
+      }
+    }
     default:
       return state
   }
@@ -95,6 +118,14 @@ export const deleteUser = (useremail) => {
   return {
     type: 'DELETE_USER',
     data: useremail
+  }
+}
+
+export const updateChangedUserdata = (email, data) => {
+  return {
+    type: 'UPDATE_CHANGED_USERDATA',
+    email: email,
+    data: data
   }
 }
 

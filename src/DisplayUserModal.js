@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Modal, Button, Loader, FlexboxGrid, Toggle, Icon, Notification } from 'rsuite'
+import { Modal, Button, Loader, FlexboxGrid, Toggle, Icon, Notification, Whisper, Popover, Input, InputGroup } from 'rsuite'
 import { connect } from 'react-redux'
-import { toggleDisplayUserModal, deleteUser } from './redux/reducer'
-import { removeUserFromDatabase } from './firebase/db'
+import { toggleDisplayUserModal, deleteUser, updateChangedUserdata } from './redux/reducer'
+import { removeUserFromDatabase, updateUserdata } from './firebase/db'
 import './DisplayUserModal.css'
 
 class DisplayUserModal extends Component {
@@ -50,6 +50,14 @@ class DisplayUserModal extends Component {
     return prefix
   }
 
+  onSaveChange = async (changedField) => {
+    if (await updateUserdata(this.props.displayModal.email, changedField)) {
+      this.props.updateChangedUserdata(this.props.displayModal.email, changedField)
+    } else {
+      console.log("fail")
+    }
+  }
+
   render() {
     console.log(this.props.displayModal)
     return (
@@ -69,16 +77,19 @@ class DisplayUserModal extends Component {
             </FlexboxGrid.Item>
 
             <FlexboxGrid.Item colspan={16}>
-              <p><span style={{ fontWeight: 'bold' }}>Nimi:</span> { this.props.displayModal.name } </p>
-              <p><span style={{ fontWeight: 'bold' }}>Kaupunki:</span> { this.props.displayModal.city } </p>
-              <p><span style={{ fontWeight: 'bold' }}>Osoite:</span> { this.props.displayModal.address } </p>
-              <p><span style={{ fontWeight: 'bold' }}>Email:</span> { this.props.displayModal.email } </p>
-              <p><span style={{ fontWeight: 'bold' }}>Puhelin:</span> { this.props.displayModal.phone } </p>
-              <p><span style={{ fontWeight: 'bold' }}>Osaamisalue:</span> { this.props.displayModal.skill } </p>
-              <p><span style={{ fontWeight: 'bold' }}>Yhteyshenkilö:</span> { this.props.displayModal.contactperson } </p>
-              <p><span style={{ fontWeight: 'bold' }}>Verkkosivu:</span> <a target="_blank" href={ this.getUrlPrefix(this.props.displayModal.website) + this.props.displayModal.website }>{ this.props.displayModal.website }</a></p>
-              <p><span style={{ fontWeight: 'bold' }}>Erityishuomioita:</span> { this.props.displayModal.notes } </p>
-              <p><span style={{ fontWeight: 'bold' }}>Mukana projekteissa:</span> { this.props.displayModal.projects } </p>
+              <ul style={{ listStyleType: 'none' }}>
+                <li><CustomComponent data={ this.props.displayModal } accessor="name" displ="Nimi: " onSaveChange={ this.onSaveChange } /></li>
+                <li><CustomComponent data={ this.props.displayModal } accessor="city" displ="Kaupunki: " onSaveChange={ this.onSaveChange } /></li>
+                <li><CustomComponent data={ this.props.displayModal } accessor="address" displ="Osoite: " onSaveChange={ this.onSaveChange } /></li>
+                <li><p><span style={{ fontWeight: 'bold' }}>Sähköposti: </span> { this.props.displayModal.email }</p></li>
+                <li><CustomComponent data={ this.props.displayModal } accessor="phone" displ="Puhelin: " onSaveChange={ this.onSaveChange } /></li>
+                <li><CustomComponent data={ this.props.displayModal } accessor="skill" displ="Osaamisalue: " onSaveChange={ this.onSaveChange } /></li>
+                <li><CustomComponent data={ this.props.displayModal } accessor="contactperson" displ="Yhteyshenkilö: " onSaveChange={ this.onSaveChange } /></li>
+                <li><CustomComponent data={ this.props.displayModal } accessor="address" displ="Osoite: " onSaveChange={ this.onSaveChange } /></li>
+                <li><CustomComponent data={ this.props.displayModal } accessor="website" displ="Verkkosivu: " onSaveChange={ this.onSaveChange } /></li>
+                <li><CustomComponent data={ this.props.displayModal } accessor="notes" displ="Erityishuomioita: " onSaveChange={ this.onSaveChange } /></li>
+                <li><CustomComponent data={ this.props.displayModal } accessor="projects" displ="Projektit: " onSaveChange={ this.onSaveChange } textarea={ true }/></li>
+              </ul>
             </FlexboxGrid.Item>
           </FlexboxGrid>
         </Modal.Body>
@@ -90,15 +101,45 @@ class DisplayUserModal extends Component {
             <Icon icon="trash" /> Poista henkilö
           </Button>
 
-          <Button size="sm" onClick={ this.close } appearance="primary" color="orange">
-            <Icon icon="edit" /> Muokkaa tietoja
-          </Button>
-
           <Button size="sm" onClick={ this.close } appearance="primary">
             <Icon icon="close" /> Sulje
           </Button>
         </Modal.Footer>
       </Modal>
+    )
+  }
+}
+
+class CustomComponent extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      inputValue: props.data[props.accessor]
+    }
+  }
+
+  onChange = (val) => {
+    this.setState({ inputValue: val })
+  }
+
+  render() {
+    return (
+      <Whisper
+        trigger="click"
+        placement="left"
+        speaker={
+          <Popover>
+            <InputGroup style={{ width: 300 }}>
+              <Input componentClass={ this.props.textarea ? "textarea" : "input" } value={ this.state.inputValue } onChange={ (val) => this.onChange(val) } />
+              <InputGroup.Button color="cyan" onClick={ () => this.props.onSaveChange({ [this.props.accessor]: this.state.inputValue }) }>
+                Tallenna
+              </InputGroup.Button>
+            </InputGroup>
+          </Popover>
+        }
+      >
+        <p><span style={{ fontWeight: 'bold' }}>{ this.props.displ }</span> { this.props.data[this.props.accessor] }</p>
+      </Whisper>
     )
   }
 }
@@ -111,5 +152,5 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps,
-  { toggleDisplayUserModal, deleteUser }
+  { toggleDisplayUserModal, deleteUser, updateChangedUserdata }
 )(DisplayUserModal)

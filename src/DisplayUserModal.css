@@ -1,3 +1,11 @@
 .rs-btn-toggle {
   margin-right: 10px;
 }
+
+.rs-popover .rs-popover-content {
+  margin-top: 0px;
+}
+
+.rs-popover {
+  padding: 0px;
+}

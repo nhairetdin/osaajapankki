@@ -72,3 +72,12 @@ export const removeUserFromDatabase = async (useremail) => {
     return false
   }
 }
+
+export const updateUserdata = async (user, data) => {
+  try {
+    await db.collection('users').doc(user).update({ ...data })
+    return true
+  } catch(error) {
+    return false
+  }
+}
