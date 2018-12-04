@@ -15,21 +15,22 @@ export const signUpWithGoogle = () => {
     })
 }
 
-export const signUpWithEmailAndPassword = (email, pass) => {
-  firebase.auth().signInWithEmailAndPassword(email, pass).then(result => {
-    console.log("ok")
-  }).catch(err => {
-    console.log(err)
-  })
+export const signUpWithEmailAndPassword = async (email, pass) => {
+  return await firebase.auth().signInWithEmailAndPassword(email, pass)
+    .then(result => {
+      return false
+    }).catch(err => {
+      return err.message
+    })
 }
 
-export const createUserWithEmailAndPassword = (email, pass) => {
-  firebase.auth().createUserWithEmailAndPassword(email,pass)
+export const createUserWithEmailAndPassword = async (email, pass) => {
+  return await firebase.auth().createUserWithEmailAndPassword(email, pass)
     .then(() => {
-      console.log("user created")
+      return false
     })
     .catch((err) => {
-      console.log("user creation failed")
+      return err.message
     })
 }
 

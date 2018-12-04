@@ -13,7 +13,8 @@ import {
   Header,
   Panel,
   Navbar,
-  Icon
+  Icon,
+  Notification
 } from 'rsuite'
 import RegisterModal from './RegisterModal'
 import 'rsuite/dist/styles/rsuite.min.css'
@@ -61,8 +62,14 @@ class Login extends Component {
     this.setState({ formValue: value })
   }
 
-  login = () => {
-    auth.signUpWithEmailAndPassword(this.state.formValue.email, this.state.formValue.password)
+  login = async () => {
+    const msg = await auth.signUpWithEmailAndPassword(this.state.formValue.email, this.state.formValue.password)
+    if (msg) {
+      Notification['error']({
+        title: 'Virhe:',
+        description: msg
+      })
+    }
   }
 
   render() {

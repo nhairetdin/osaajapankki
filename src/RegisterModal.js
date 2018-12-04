@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Modal, Button, Form, FormGroup, ControlLabel, FormControl } from 'rsuite'
+import { Modal, Button, Form, FormGroup, ControlLabel, FormControl, Notification } from 'rsuite'
 import * as auth from './firebase/auth'
 
 class RegisterModal extends Component {
@@ -36,8 +36,14 @@ class RegisterModal extends Component {
     }
   }
 
-  createUser = () => {
-    auth.createUserWithEmailAndPassword(this.state.formValue.email, this.state.formValue.password)
+  createUser = async () => {
+    const msg = await auth.createUserWithEmailAndPassword(this.state.formValue.email, this.state.formValue.password)
+    if (msg) {
+      Notification['error']({
+        title: 'Virhe:',
+        description: msg
+      })
+    }
   }
 
   render() {
