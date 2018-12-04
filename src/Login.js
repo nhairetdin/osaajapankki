@@ -21,6 +21,7 @@ import './Login.css'
 import './NavbarTop.css'
 
 import * as auth from './firebase/auth'
+import ResetPasswordModal from './ResetPasswordModal';
 
 class Login extends Component {
   state = {
@@ -28,7 +29,8 @@ class Login extends Component {
       email: '',
       password: ''
     },
-    showRegisterModal: false
+    showRegisterModal: false,
+    showResetPasswordModal: false
   }
 
   loginGoogle = () => {
@@ -39,12 +41,20 @@ class Login extends Component {
     auth.signUpWithEmailAndPassword('admin@test.fi', 'admin1')
   }
 
-  openModal = () => {
+  openRegisterModal = () => {
     this.setState({ showRegisterModal: true })
   }
 
-  closeModal = () => {
+  closeRegisterModal = () => {
     this.setState({ showRegisterModal: false })
+  }
+
+  openResetPasswordModal = () => {
+    this.setState({ showResetPasswordModal: true })
+  }
+
+  closeResetPasswordModal = () => {
+    this.setState({ showResetPasswordModal: false })
   }
 
   handleChange = (value) => {
@@ -58,7 +68,8 @@ class Login extends Component {
   render() {
     return (
       <Container>
-        <RegisterModal show={ this.state.showRegisterModal } onHide={ this.closeModal }/>
+        <RegisterModal show={ this.state.showRegisterModal } onHide={ this.closeRegisterModal }/>
+        <ResetPasswordModal show={ this.state.showResetPasswordModal } onHide={ this.closeResetPasswordModal }/>
 
         <Header>
           <Navbar appearance="inverse" classPrefix="worksans">
@@ -96,8 +107,8 @@ class Login extends Component {
                   <FormGroup>
                     <ButtonToolbar>
                       <Button appearance="primary" onClick={ this.login }>Kirjaudu</Button>
-                      <Button appearance="link">Unohtunut salasana?</Button>
-                      <Button appearance="link" onClick={ this.openModal }>Luo tunnus</Button>
+                      <Button appearance="link" onClick={ this.openResetPasswordModal }>Unohtunut salasana?</Button>
+                      <Button appearance="link" onClick={ this.openRegisterModal }>Luo tunnus</Button>
                     </ButtonToolbar>
                   </FormGroup>
                 </Form>

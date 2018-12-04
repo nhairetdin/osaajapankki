@@ -17,7 +17,9 @@ export const signUpWithGoogle = () => {
 
 export const signUpWithEmailAndPassword = (email, pass) => {
   firebase.auth().signInWithEmailAndPassword(email, pass).then(result => {
-    console.log(result)
+    console.log("ok")
+  }).catch(err => {
+    console.log(err)
   })
 }
 
@@ -32,3 +34,12 @@ export const createUserWithEmailAndPassword = (email, pass) => {
 }
 
 export const signOut = () => { firebase.auth().signOut() }
+
+export const sendPasswordResetEmail = async (email) => {
+  try {
+    await firebase.auth().sendPasswordResetEmail(email)
+    return true
+  } catch (error) {
+    return false
+  }
+}
